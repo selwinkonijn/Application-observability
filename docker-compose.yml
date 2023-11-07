@@ -42,7 +42,6 @@ services:
     networks:
       - app
 
-
   promtail:
     image:  grafana/promtail:latest
     container_name: promtail
@@ -56,6 +55,16 @@ services:
     networks:
       - app
 
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - "16686:16686" # Jaeger UI
+      - "4317:4317"   # OTLP gRPC receiver
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+    networks:
+      - app
+    
 networks:
   app:
     name: app
